@@ -19,14 +19,15 @@ import static android.content.ContentValues.TAG;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
     private List<DataResponse> mComments;
-    private List<DataResponse> subComments;
+    private List<DataResponse> subCommentsLvl1;
+    private List<DataResponse> subCommentsLvl2;
     Context context;
 
 
-    public CommentsAdapter(List<DataResponse> comments,List<DataResponse> sComments,Context context) {
-        context = this.context;
+    public CommentsAdapter(List<DataResponse> comments, List<DataResponse> sComments, List<DataResponse> tComments) {
         mComments = comments;
-        subComments =sComments;
+        subCommentsLvl1 = sComments;
+        subCommentsLvl2 = tComments;
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -55,25 +56,25 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
 
 
-        if (mComments.get(position) != null){
+        if (mComments.get(position) != null) {
             DataResponse currentComment = mComments.get(position);
 
 
-            SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subComments,holder.cTextView);
+            SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subCommentsLvl1,subCommentsLvl2, holder.cTextView);
 
             holder.cRecyclerView.setHasFixedSize(false);
-            holder.cRecyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+            holder.cRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
             holder.cRecyclerView.setAdapter(subCommentsAdapter);
 
 
-            if (currentComment.getText() != null){
+            if (currentComment.getText() != null) {
 
-                Log.d(TAG, "COMENTU "+currentComment.getId());
+                Log.d(TAG, "COMENTU " + currentComment.getId());
                 holder.cTextView.setTag(currentComment.getId());
                 holder.cTextView.setText(Html.fromHtml(currentComment.getText()));
                 holder.cTextView.setMovementMethod(LinkMovementMethod.getInstance());
-            }else {
+            } else {
                 holder.cRecyclerView.setVisibility(View.GONE);
             }
 
@@ -83,10 +84,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public int getItemCount() {
-        return  null!=mComments?mComments.size():0;
+        return null != mComments ? mComments.size() : 0;
     }
-
-
 
 
 }

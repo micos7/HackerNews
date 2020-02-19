@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,17 +6,17 @@
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/commentLvl1Card"
+        android:id="@+id/commentLvl2Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="15dp">
 
 
         <TextView
-            android:id="@+id/sub_comment"
+            android:id="@+id/sub_comment_lvl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
     </RelativeLayout>
 
