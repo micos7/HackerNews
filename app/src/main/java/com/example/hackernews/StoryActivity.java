@@ -32,8 +32,10 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> comments = new ArrayList<>();
     private List<DataResponse> commentsLvl1 = new ArrayList<>();
     private List<DataResponse> commentsLvl2 = new ArrayList<>();
+    private List<DataResponse> commentsLvl3 = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
+    Call<DataResponse> commentLvl3;
     public Context context;
 
     @Override
@@ -45,7 +47,7 @@ public class StoryActivity extends AppCompatActivity {
         cRecyclerView.setHasFixedSize(true);
         cLayoutManager = new LinearLayoutManager(getApplicationContext());
         cRecyclerView.setLayoutManager(cLayoutManager);
-        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2);
+        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2,commentsLvl3);
 
 
         if (getIntent().getExtras() != null) {
@@ -109,6 +111,29 @@ public class StoryActivity extends AppCompatActivity {
 
                                                                 commentsLvl2.add(response.body());
                                                                 cAdapter.notifyDataSetChanged();
+
+                                                                List<Integer> commentsLvl3ids = response.body().getKids();
+
+                                                                if (commentsLvl3ids != null) {
+
+                                                                    for (int x = 0; x < commentsLvl3ids.size(); x++) {
+
+                                                                        commentLvl3 = hackerNewsApi.getStory(commentsLvl3ids.get(x));
+
+                                                                        commentLvl3.enqueue(new Callback<DataResponse>() {
+                                                                            @Override
+                                                                            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                                                                                commentsLvl3.add(response.body());
+                                                                                cAdapter.notifyDataSetChanged();
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onFailure(Call<DataResponse> call, Throwable t) {
+
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                }
                                                             }
 
                                                             @Override
