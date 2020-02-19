@@ -1,2 +1,2 @@
 # HackerNews
-HackerNews Client
+HackerNews Android Client in Java
