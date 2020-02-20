@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
 //                Log.e("onSubscribe", "YOUR DATA IS HERE: " + response.body());
                 totalList = response.body().size();
-                for (Integer i = 0; i < 12; i++) {
+                for (Integer i = 0; i < 14; i++) {
                     j = i;
                     story = hackerNewsApi.getStory(response.body().get(i));
                     story.enqueue(new Callback<DataResponse>() {

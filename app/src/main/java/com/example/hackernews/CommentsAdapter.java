@@ -22,14 +22,16 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     private List<DataResponse> subCommentsLvl1;
     private List<DataResponse> subCommentsLvl2;
     private List<DataResponse> subCommentsLvl3;
+    private List<DataResponse> subCommentsLvl4;
     Context context;
 
 
-    public CommentsAdapter(List<DataResponse> comments, List<DataResponse> sComments, List<DataResponse> tComments, List<DataResponse> thComments) {
+    public CommentsAdapter(List<DataResponse> comments, List<DataResponse> sComments, List<DataResponse> tComments, List<DataResponse> thComments,List<DataResponse> fComments) {
         mComments = comments;
         subCommentsLvl1 = sComments;
         subCommentsLvl2 = tComments;
         subCommentsLvl3 = thComments;
+        subCommentsLvl4 = fComments;
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +64,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             DataResponse currentComment = mComments.get(position);
 
 
-            SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subCommentsLvl1,subCommentsLvl2,subCommentsLvl3, holder.cTextView);
+            SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subCommentsLvl1,subCommentsLvl2,subCommentsLvl3,subCommentsLvl4, holder.cTextView);
 
             holder.cRecyclerView.setHasFixedSize(false);
             holder.cRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));

@@ -1,5 +1,6 @@
 package com.example.hackernews;
 
+import android.content.Context;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -20,22 +22,27 @@ public class SubCommentsLvl3Adapter extends RecyclerView.Adapter<SubCommentsLvl3
 
 
     private List<DataResponse> mSubCommentsLvl3;
+    private List<DataResponse> mSubCommentsLvl4;
     private TextView parTextView;
+    Context context;
 
-    public SubCommentsLvl3Adapter(List<DataResponse> comments, TextView parentTextView) {
+    public SubCommentsLvl3Adapter(List<DataResponse> comments,List<DataResponse> commentsLvl4, TextView parentTextView) {
         mSubCommentsLvl3 = comments;
+        mSubCommentsLvl4 = commentsLvl4;
         parTextView = parentTextView;
     }
 
     public static class SubCommentLvl3ViewHolder extends RecyclerView.ViewHolder {
         public TextView scTextView;
         private RelativeLayout cardView;
+        public RecyclerView lvl4RecyclerView;
 
 
         public SubCommentLvl3ViewHolder(@NonNull View itemView) {
             super(itemView);
             scTextView = itemView.findViewById(R.id.sub_comment_lvl3);
             cardView = itemView.findViewById(R.id.commentLvl3Card);
+            lvl4RecyclerView  = itemView.findViewById(R.id.lvl4RecyclerView);
         }
     }
 
@@ -55,11 +62,15 @@ public class SubCommentsLvl3Adapter extends RecyclerView.Adapter<SubCommentsLvl3
         if (mSubCommentsLvl3.get(position) != null) {
             DataResponse currentComment = mSubCommentsLvl3.get(position);
 
-            Log.d(TAG, "LVL3 " + currentComment.getText());
+//            Log.d(TAG, "LVL3 " + currentComment.getText());
 
-//            Log.d(TAG, "TAGU " + parTextView.getTag());
-//
-//            Log.d(TAG, "PARINTE " + currentComment.getParent());
+            SubCommentsLvl4Adapter subCommentsLvl4Adapter = new SubCommentsLvl4Adapter(mSubCommentsLvl3,mSubCommentsLvl4, holder.scTextView);
+
+            holder.lvl4RecyclerView.setHasFixedSize(false);
+            holder.lvl4RecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+            holder.lvl4RecyclerView.setAdapter(subCommentsLvl4Adapter);
+
 
             if (currentComment.getParent().equals(parTextView.getTag()) && currentComment.getText() != null) {
 //                Log.d(TAG, "ADEVARAT");
