@@ -34,10 +34,12 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> commentsLvl2 = new ArrayList<>();
     private List<DataResponse> commentsLvl3 = new ArrayList<>();
     private List<DataResponse> commentsLvl4 = new ArrayList<>();
+    private List<DataResponse> commentsLvl5 = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
     Call<DataResponse> commentLvl3;
     Call<DataResponse> commentLvl4;
+    Call<DataResponse> commentLvl5;
     public Context context;
 
     @Override
@@ -49,7 +51,7 @@ public class StoryActivity extends AppCompatActivity {
         cRecyclerView.setHasFixedSize(true);
         cLayoutManager = new LinearLayoutManager(getApplicationContext());
         cRecyclerView.setLayoutManager(cLayoutManager);
-        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4);
+        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4,commentsLvl5);
 
 
         if (getIntent().getExtras() != null) {
@@ -141,6 +143,27 @@ public class StoryActivity extends AppCompatActivity {
                                                                                             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
                                                                                                 commentsLvl4.add(response.body());
                                                                                                 cAdapter.notifyDataSetChanged();
+
+                                                                                                List<Integer> commentsLvl5ids = response.body().getKids();
+
+                                                                                                if (commentsLvl5ids != null) {
+                                                                                                    for (int l = 0; l < commentsLvl5ids.size(); l++) {
+                                                                                                        commentLvl5 = hackerNewsApi.getStory(commentsLvl5ids.get(l));
+
+                                                                                                        commentLvl5.enqueue(new Callback<DataResponse>() {
+                                                                                                            @Override
+                                                                                                            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                                                                                                                commentsLvl5.add(response.body());
+                                                                                                                cAdapter.notifyDataSetChanged();
+                                                                                                            }
+
+                                                                                                            @Override
+                                                                                                            public void onFailure(Call<DataResponse> call, Throwable t) {
+
+                                                                                                            }
+                                                                                                        });
+                                                                                                    }
+                                                                                                }
 
 
                                                                                             }
