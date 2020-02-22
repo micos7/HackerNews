@@ -35,11 +35,13 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> commentsLvl3 = new ArrayList<>();
     private List<DataResponse> commentsLvl4 = new ArrayList<>();
     private List<DataResponse> commentsLvl5 = new ArrayList<>();
+    private List<DataResponse> commentsLvl6 = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
     Call<DataResponse> commentLvl3;
     Call<DataResponse> commentLvl4;
     Call<DataResponse> commentLvl5;
+    Call<DataResponse> commentLvl6;
     public Context context;
 
     @Override
@@ -51,7 +53,7 @@ public class StoryActivity extends AppCompatActivity {
         cRecyclerView.setHasFixedSize(true);
         cLayoutManager = new LinearLayoutManager(getApplicationContext());
         cRecyclerView.setLayoutManager(cLayoutManager);
-        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4,commentsLvl5);
+        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4, commentsLvl5,commentsLvl6);
 
 
         if (getIntent().getExtras() != null) {
@@ -155,6 +157,29 @@ public class StoryActivity extends AppCompatActivity {
                                                                                                             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
                                                                                                                 commentsLvl5.add(response.body());
                                                                                                                 cAdapter.notifyDataSetChanged();
+
+                                                                                                                List<Integer> commentsLvl6ids = response.body().getKids();
+
+                                                                                                                if (commentsLvl6ids != null) {
+
+                                                                                                                    for (int p = 0; p < commentsLvl5ids.size(); p++) {
+                                                                                                                        commentLvl6 = hackerNewsApi.getStory(commentsLvl6ids.get(p));
+
+                                                                                                                        commentLvl6.enqueue(new Callback<DataResponse>() {
+                                                                                                                            @Override
+                                                                                                                            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                                                                                                                                commentsLvl6.add(response.body());
+                                                                                                                                cAdapter.notifyDataSetChanged();
+                                                                                                                            }
+
+                                                                                                                            @Override
+                                                                                                                            public void onFailure(Call<DataResponse> call, Throwable t) {
+
+                                                                                                                            }
+                                                                                                                        });
+
+                                                                                                                    }
+                                                                                                                }
                                                                                                             }
 
                                                                                                             @Override

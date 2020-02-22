@@ -1,5 +1,6 @@
 package com.example.hackernews;
 
+import android.content.Context;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -21,24 +23,29 @@ public class SubCommentsLvl5Adapter extends RecyclerView.Adapter<SubCommentsLvl5
     private List<DataResponse> mSubCommentsLvl4;
     private List<DataResponse> mSubCommentsLvl5;
     private List<DataResponse> mSubCommentsLvl6;
+    private List<DataResponse> mSubCommentsLvl7;
     private TextView parTextView;
+    Context context;
 
-    public SubCommentsLvl5Adapter(List<DataResponse> commentsLvl4, List<DataResponse> commentsLvl5,List<DataResponse> commentsLvl6, TextView parentTextView) {
+    public SubCommentsLvl5Adapter(List<DataResponse> commentsLvl4, List<DataResponse> commentsLvl5,List<DataResponse> commentsLvl6,List<DataResponse> commentsLvl7, TextView parentTextView) {
         mSubCommentsLvl4 = commentsLvl4;
         mSubCommentsLvl5 = commentsLvl5;
         mSubCommentsLvl6 = commentsLvl6;
+        mSubCommentsLvl7 = commentsLvl7;
         parTextView = parentTextView;
     }
 
     public static class SubCommentLvl5ViewHolder extends RecyclerView.ViewHolder {
         public TextView scTextView;
         private RelativeLayout cardView;
+        public RecyclerView lvl6RecyclerView;
 
 
         public SubCommentLvl5ViewHolder(@NonNull View itemView) {
             super(itemView);
             scTextView = itemView.findViewById(R.id.sub_comment_lvl5);
             cardView = itemView.findViewById(R.id.commentLvl5Card);
+            lvl6RecyclerView = itemView.findViewById(R.id.lvl6RecyclerView);
         }
     }
 
@@ -58,15 +65,18 @@ public class SubCommentsLvl5Adapter extends RecyclerView.Adapter<SubCommentsLvl5
         if (mSubCommentsLvl5 != null) {
             DataResponse currentComment = mSubCommentsLvl6.get(position);
 
+            SubCommentsLvl6Adapter subCommentsLvl6Adapter = new SubCommentsLvl6Adapter(mSubCommentsLvl4,mSubCommentsLvl5,mSubCommentsLvl6,mSubCommentsLvl7, holder.scTextView);
+
+            holder.lvl6RecyclerView.setHasFixedSize(false);
+            holder.lvl6RecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+
+            holder.lvl6RecyclerView.setAdapter(subCommentsLvl6Adapter);
 
 
-//            Log.d(TAG, "TAGU " + parTextView.getTag());
-//
-//            Log.d(TAG, "PARINTE " + currentComment.getParent());
 
             if (currentComment.getParent().equals(parTextView.getTag()) && currentComment.getText() != null) {
-                Log.d(TAG, "LVL5 " + currentComment.getText());
-//                Log.d(TAG, "ADEVARAT");
+//                Log.d(TAG, "LVL5 " + currentComment.getText());
+
                 holder.scTextView.setText(Html.fromHtml(currentComment.getText()));
                 holder.scTextView.setTag(currentComment.getId());
                 holder.scTextView.setMovementMethod(LinkMovementMethod.getInstance());

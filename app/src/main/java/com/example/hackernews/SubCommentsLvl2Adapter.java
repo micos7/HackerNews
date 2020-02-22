@@ -24,14 +24,16 @@ public class SubCommentsLvl2Adapter extends RecyclerView.Adapter<SubCommentsLvl2
     private List<DataResponse> mSubCommentsLvl3;
     private List<DataResponse> mSubCommentsLvl4;
     private List<DataResponse> mSubCommentsLvl5;
+    private List<DataResponse> mSubCommentsLvl6;
     private TextView parTextView;
     Context context;
 
-    public SubCommentsLvl2Adapter(List<DataResponse> comments,List<DataResponse> commentsLvl3,List<DataResponse> commentsLvl4,List<DataResponse> commentsLvl5, TextView parentTextView) {
+    public SubCommentsLvl2Adapter(List<DataResponse> comments,List<DataResponse> commentsLvl3,List<DataResponse> commentsLvl4,List<DataResponse> commentsLvl5,List<DataResponse> commentsLvl6, TextView parentTextView) {
         mSubCommentsLvl2 = comments;
         mSubCommentsLvl3 = commentsLvl3;
         mSubCommentsLvl4 = commentsLvl4;
         mSubCommentsLvl5 = commentsLvl5;
+        mSubCommentsLvl6 = commentsLvl6;
         parTextView = parentTextView;
     }
 
@@ -68,7 +70,7 @@ public class SubCommentsLvl2Adapter extends RecyclerView.Adapter<SubCommentsLvl2
 //            Log.d(TAG, "LVL2 " + currentComment.getText());
 
 
-            SubCommentsLvl3Adapter subCommentsLvl3Adapter = new SubCommentsLvl3Adapter(mSubCommentsLvl3,mSubCommentsLvl4,mSubCommentsLvl5, holder.scTextView);
+            SubCommentsLvl3Adapter subCommentsLvl3Adapter = new SubCommentsLvl3Adapter(mSubCommentsLvl3,mSubCommentsLvl4,mSubCommentsLvl5,mSubCommentsLvl6, holder.scTextView);
 
             holder.lvl3RecyclerView.setHasFixedSize(false);
             holder.lvl3RecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
