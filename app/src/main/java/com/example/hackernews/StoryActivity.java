@@ -36,12 +36,14 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> commentsLvl4 = new ArrayList<>();
     private List<DataResponse> commentsLvl5 = new ArrayList<>();
     private List<DataResponse> commentsLvl6 = new ArrayList<>();
+    private List<DataResponse> commentsLvl7 = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
     Call<DataResponse> commentLvl3;
     Call<DataResponse> commentLvl4;
     Call<DataResponse> commentLvl5;
     Call<DataResponse> commentLvl6;
+    Call<DataResponse> commentLvl7;
     public Context context;
 
     @Override
@@ -53,7 +55,7 @@ public class StoryActivity extends AppCompatActivity {
         cRecyclerView.setHasFixedSize(true);
         cLayoutManager = new LinearLayoutManager(getApplicationContext());
         cRecyclerView.setLayoutManager(cLayoutManager);
-        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4, commentsLvl5,commentsLvl6);
+        cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4, commentsLvl5, commentsLvl6, commentsLvl7);
 
 
         if (getIntent().getExtras() != null) {
@@ -162,7 +164,7 @@ public class StoryActivity extends AppCompatActivity {
 
                                                                                                                 if (commentsLvl6ids != null) {
 
-                                                                                                                    for (int p = 0; p < commentsLvl5ids.size(); p++) {
+                                                                                                                    for (int p = 0; p < commentsLvl6ids.size(); p++) {
                                                                                                                         commentLvl6 = hackerNewsApi.getStory(commentsLvl6ids.get(p));
 
                                                                                                                         commentLvl6.enqueue(new Callback<DataResponse>() {
@@ -170,6 +172,27 @@ public class StoryActivity extends AppCompatActivity {
                                                                                                                             public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
                                                                                                                                 commentsLvl6.add(response.body());
                                                                                                                                 cAdapter.notifyDataSetChanged();
+
+                                                                                                                                List<Integer> commentsLvl7ids = response.body().getKids();
+                                                                                                                                if (commentsLvl7ids != null) {
+
+                                                                                                                                    for (int o = 0; o < commentsLvl7ids.size(); o++) {
+                                                                                                                                        commentLvl7 = hackerNewsApi.getStory(commentsLvl7ids.get(o));
+
+                                                                                                                                        commentLvl7.enqueue(new Callback<DataResponse>() {
+                                                                                                                                            @Override
+                                                                                                                                            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                                                                                                                                                commentsLvl7.add(response.body());
+                                                                                                                                                cAdapter.notifyDataSetChanged();
+                                                                                                                                            }
+
+                                                                                                                                            @Override
+                                                                                                                                            public void onFailure(Call<DataResponse> call, Throwable t) {
+
+                                                                                                                                            }
+                                                                                                                                        });
+                                                                                                                                    }
+                                                                                                                                }
                                                                                                                             }
 
                                                                                                                             @Override

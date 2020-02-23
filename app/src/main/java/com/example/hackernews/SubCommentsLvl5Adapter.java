@@ -24,14 +24,16 @@ public class SubCommentsLvl5Adapter extends RecyclerView.Adapter<SubCommentsLvl5
     private List<DataResponse> mSubCommentsLvl5;
     private List<DataResponse> mSubCommentsLvl6;
     private List<DataResponse> mSubCommentsLvl7;
+    private List<DataResponse> mSubCommentsLvl8;
     private TextView parTextView;
     Context context;
 
-    public SubCommentsLvl5Adapter(List<DataResponse> commentsLvl4, List<DataResponse> commentsLvl5,List<DataResponse> commentsLvl6,List<DataResponse> commentsLvl7, TextView parentTextView) {
+    public SubCommentsLvl5Adapter(List<DataResponse> commentsLvl4, List<DataResponse> commentsLvl5,List<DataResponse> commentsLvl6,List<DataResponse> commentsLvl7,List<DataResponse> commentsLvl8, TextView parentTextView) {
         mSubCommentsLvl4 = commentsLvl4;
         mSubCommentsLvl5 = commentsLvl5;
         mSubCommentsLvl6 = commentsLvl6;
         mSubCommentsLvl7 = commentsLvl7;
+        mSubCommentsLvl8 = commentsLvl8;
         parTextView = parentTextView;
     }
 
@@ -62,10 +64,10 @@ public class SubCommentsLvl5Adapter extends RecyclerView.Adapter<SubCommentsLvl5
     @Override
     public void onBindViewHolder(@NonNull SubCommentsLvl5Adapter.SubCommentLvl5ViewHolder holder, int position) {
 
-        if (mSubCommentsLvl5 != null) {
+        if (mSubCommentsLvl6 != null) {
             DataResponse currentComment = mSubCommentsLvl6.get(position);
 
-            SubCommentsLvl6Adapter subCommentsLvl6Adapter = new SubCommentsLvl6Adapter(mSubCommentsLvl4,mSubCommentsLvl5,mSubCommentsLvl6,mSubCommentsLvl7, holder.scTextView);
+            SubCommentsLvl6Adapter subCommentsLvl6Adapter = new SubCommentsLvl6Adapter(mSubCommentsLvl4,mSubCommentsLvl5,mSubCommentsLvl6,mSubCommentsLvl7,mSubCommentsLvl8, holder.scTextView);
 
             holder.lvl6RecyclerView.setHasFixedSize(false);
             holder.lvl6RecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));

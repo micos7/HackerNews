@@ -6,27 +6,17 @@
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/commentLvl6Card"
+        android:id="@+id/commentLvl7Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp">
+        android:layout_marginLeft="38dp">
 
 
         <TextView
-            android:id="@+id/sub_comment_lvl6"
+            android:id="@+id/sub_comment_lvl7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="normal" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-
-            android:id="@+id/lvl7RecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sub_comment_lvl6">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
