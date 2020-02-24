@@ -11,6 +11,7 @@
         android:layout_margin="2dp">
 
         <TextView
+            android:background="@android:drawable/editbox_background"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

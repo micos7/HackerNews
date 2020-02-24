@@ -9,10 +9,11 @@
         android:id="@+id/commentLvl3Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp">
+        android:layout_marginLeft="14dp">
 
 
         <TextView
+            android:background="@android:drawable/editbox_background"
             android:id="@+id/sub_comment_lvl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
