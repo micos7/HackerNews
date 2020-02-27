@@ -18,11 +18,13 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
+        public TextView mTextViewScore;
         OnStoryListener onStoryListener;
 
         public ExampleViewHolder(@NonNull View itemView, OnStoryListener onStoryListener) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.textView);
+            mTextViewScore = itemView.findViewById(R.id.textViewScore);
             this.onStoryListener = onStoryListener;
             itemView.setOnClickListener(this);
 
@@ -53,6 +55,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         DataResponse currentStory = mStories.get(position);
 
         holder.mTextView.setText(currentStory.getTitle());
+        holder.mTextViewScore.setText(currentStory.getScore().toString());
         Log.d(TAG, "IDUL "+currentStory.getId().toString());
         holder.mTextView.setTag(currentStory.getId());
     }
