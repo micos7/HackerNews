@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
 
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new StoryAdapter(dataResponses,this);
+        mAdapter = new StoryAdapter(dataResponses,this,this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

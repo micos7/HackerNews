@@ -41,6 +41,8 @@
         <TextView
             android:id="@+id/urlTxtView"
             android:layout_below="@+id/textView"
+            android:layout_toRightOf="@+id/textViewScore"
+            android:layout_marginStart="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>

@@ -65,7 +65,6 @@ public class StoryActivity extends AppCompatActivity {
 
             List<Integer> commentsIds = myStory.getKids();
 
-            //Log.d(TAG, "IDS: " + commentsIds);
 
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

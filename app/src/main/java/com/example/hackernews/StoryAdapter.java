@@ -1,5 +1,10 @@
 package com.example.hackernews;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +20,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
     private static final String TAG = "STORY";
     private List<DataResponse> mStories;
     private OnStoryListener mOnStoryListener;
+    Context mContext;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
@@ -28,9 +34,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
             mTextViewScore = itemView.findViewById(R.id.textViewScore);
             mTextViewUrl = itemView.findViewById(R.id.urlTxtView);
             this.onStoryListener = onStoryListener;
-            itemView.setOnClickListener(this);
-
-
+            mTextView.setOnClickListener(this);
         }
 
         @Override
@@ -39,9 +43,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         }
     }
 
-    public StoryAdapter(List<DataResponse> stories, OnStoryListener onStoryListener) {
+    public StoryAdapter(List<DataResponse> stories, OnStoryListener onStoryListener,Context context) {
         mStories = stories;
         this.mOnStoryListener = onStoryListener;
+        this.mContext = context;
     }
 
     @NonNull
@@ -59,7 +64,15 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         holder.mTextView.setText(currentStory.getTitle());
         holder.mTextViewScore.setText(currentStory.getScore().toString());
         holder.mTextViewUrl.setText(currentStory.getUrl());
-        Log.d(TAG, "IDUL "+currentStory.getId().toString());
+        holder.mTextViewUrl.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentStory.getUrl()));
+                mContext.startActivity(intent);
+            }
+        });
+//        Log.d(TAG, "IDUL "+currentStory.getId().toString());
         holder.mTextView.setTag(currentStory.getId());
     }
 
