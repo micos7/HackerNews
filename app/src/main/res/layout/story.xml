@@ -36,7 +36,13 @@
             android:layout_toRightOf="@+id/textViewScore"
             android:textSize="20sp"
             android:textStyle="bold">
+        </TextView>
 
+        <TextView
+            android:id="@+id/urlTxtView"
+            android:layout_below="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         </TextView>
 
 

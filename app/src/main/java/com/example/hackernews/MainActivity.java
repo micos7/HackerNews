@@ -30,9 +30,11 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<DataResponse> dataResponses = new ArrayList<>();
+    static List<Integer> ids;
     boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
     int totalList;
+    int noComments;
     Integer j;
     Call<List<Integer>> idlist;
     HackerNewsApi hackerNewsApi;
@@ -106,6 +108,8 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
             }
         });
 
+
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new StoryAdapter(dataResponses,this);
         mRecyclerView.setAdapter(mAdapter);
@@ -144,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 Log.e("onSubscribe", "TEST: " + totalList);
                 if (totalList > j) {
-                    for (Integer i = totalItems; i < 12+totalItems; i++) {
+                    for (Integer i = totalItems; i < 14+totalItems; i++) {
                         progressBar.setVisibility(View.VISIBLE);
                         Log.e("onSubscribe", "I ESTE" + j);
 //                        j = i;
