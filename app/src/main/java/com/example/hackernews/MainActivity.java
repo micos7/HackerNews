@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements StoryAdapter.OnStoryListener {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private StoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<DataResponse> dataResponses = new ArrayList<>();
     static List<Integer> ids;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     HackerNewsApi hackerNewsApi;
     Call<DataResponse> story;
     ProgressBar progressBar;
+    private SwipeRefreshLayout swipeContainer;
 
     @SuppressLint("CheckResult")
     @Override
@@ -52,8 +54,55 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        swipeContainer = findViewById(R.id.swipeRefresh);
 
 
+        getFirstStories();
+
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new StoryAdapter(dataResponses,this,this);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = mLayoutManager.getChildCount();
+                totalItems = mLayoutManager.getItemCount();
+                Log.e("onSubscribe", "VERTICAL " + dy);
+                scrollOutItems = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
+                    isScrolling = false;
+                    getMoreStories();
+                }
+            }
+        });
+
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mAdapter.clear();
+                getFirstStories();
+                mAdapter.addAll(dataResponses);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+
+
+    }
+
+    private void getFirstStories() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -107,38 +156,6 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 t.getMessage();
             }
         });
-
-
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new StoryAdapter(dataResponses,this,this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                    isScrolling = true;
-                }
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                currentItems = mLayoutManager.getChildCount();
-                totalItems = mLayoutManager.getItemCount();
-                Log.e("onSubscribe", "TOTAL " + totalItems);
-                scrollOutItems = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
-                    isScrolling = false;
-                    getMoreStories();
-                }
-            }
-        });
-
-
-
     }
 
     private void getMoreStories() {

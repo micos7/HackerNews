@@ -57,6 +57,26 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         return evh;
     }
 
+    public void clear() {
+
+        mStories.clear();
+
+        notifyDataSetChanged();
+
+    }
+
+
+
+// Add a list of items -- change to type used
+
+    public void addAll(List<DataResponse> list) {
+
+        mStories.addAll(list);
+
+        notifyDataSetChanged();
+
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         DataResponse currentStory = mStories.get(position);
