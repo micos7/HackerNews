@@ -25,6 +25,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
     public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
         public TextView mTextViewScore;
+        public TextView mTextViewDescendants;
         public TextView mTextViewUrl;
         OnStoryListener onStoryListener;
 
@@ -32,6 +33,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
             super(itemView);
             mTextView = itemView.findViewById(R.id.textView);
             mTextViewScore = itemView.findViewById(R.id.textViewScore);
+            mTextViewDescendants = itemView.findViewById(R.id.textViewDescendants);
             mTextViewUrl = itemView.findViewById(R.id.urlTxtView);
             this.onStoryListener = onStoryListener;
             mTextView.setOnClickListener(this);
@@ -67,7 +69,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
 
 
 
-// Add a list of items -- change to type used
 
     public void addAll(List<DataResponse> list) {
 
@@ -83,6 +84,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
 
         holder.mTextView.setText(currentStory.getTitle());
         holder.mTextViewScore.setText(currentStory.getScore().toString());
+        holder.mTextViewDescendants.setText(currentStory.getDescendants().toString());
         holder.mTextViewUrl.setText(currentStory.getUrl());
         holder.mTextViewUrl.setOnClickListener(new View.OnClickListener() {
 
@@ -92,7 +94,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
                 mContext.startActivity(intent);
             }
         });
-//        Log.d(TAG, "IDUL "+currentStory.getId().toString());
+
         holder.mTextView.setTag(currentStory.getId());
     }
 

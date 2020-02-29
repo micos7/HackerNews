@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
 
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new StoryAdapter(dataResponses,this,this);
+        mAdapter = new StoryAdapter(dataResponses, this, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 swipeContainer.setRefreshing(false);
             }
         });
-
 
 
     }
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 Log.e("onSubscribe", "TEST: " + totalList);
                 if (totalList > j) {
-                    for (Integer i = totalItems; i < 14+totalItems; i++) {
+                    for (Integer i = totalItems; i < 14 + totalItems; i++) {
                         progressBar.setVisibility(View.VISIBLE);
                         Log.e("onSubscribe", "I ESTE" + j);
 //                        j = i;
@@ -206,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
 
     @Override
     public void onStoryClick(int position) {
-        Intent intent = new Intent(this,StoryActivity.class);
-        intent.putExtra("STORY",dataResponses.get(position));
+        Intent intent = new Intent(this, StoryActivity.class);
+        intent.putExtra("STORY", dataResponses.get(position));
         startActivity(intent);
     }
 }
