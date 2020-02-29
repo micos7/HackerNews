@@ -47,7 +47,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         }
     }
 
-    public StoryAdapter(List<DataResponse> stories, OnStoryListener onStoryListener,Context context) {
+    public StoryAdapter(List<DataResponse> stories, OnStoryListener onStoryListener, Context context) {
         mStories = stories;
         this.mOnStoryListener = onStoryListener;
         this.mContext = context;
@@ -70,8 +70,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
     }
 
 
-
-
     public void addAll(List<DataResponse> list) {
 
         mStories.addAll(list);
@@ -86,7 +84,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
 
         holder.mTextView.setText(currentStory.getTitle());
         holder.mTextViewScore.setText(currentStory.getScore().toString());
-        holder.mTextViewDescendants.setText(currentStory.getDescendants().toString());
+        if (currentStory.getDescendants() != null) {
+            holder.mTextViewDescendants.setText(currentStory.getDescendants().toString());
+        }
         holder.mTextViewUrl.setText(currentStory.getUrl());
         holder.mTextViewUser.setText(currentStory.getBy());
         holder.mTextViewUrl.setOnClickListener(new View.OnClickListener() {
