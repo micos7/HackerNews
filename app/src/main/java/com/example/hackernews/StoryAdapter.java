@@ -27,6 +27,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         public TextView mTextViewScore;
         public TextView mTextViewDescendants;
         public TextView mTextViewUrl;
+        public TextView mTextViewUser;
         OnStoryListener onStoryListener;
 
         public ExampleViewHolder(@NonNull View itemView, OnStoryListener onStoryListener) {
@@ -35,6 +36,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
             mTextViewScore = itemView.findViewById(R.id.textViewScore);
             mTextViewDescendants = itemView.findViewById(R.id.textViewDescendants);
             mTextViewUrl = itemView.findViewById(R.id.urlTxtView);
+            mTextViewUser = itemView.findViewById(R.id.userTxtView);
             this.onStoryListener = onStoryListener;
             mTextView.setOnClickListener(this);
         }
@@ -86,6 +88,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         holder.mTextViewScore.setText(currentStory.getScore().toString());
         holder.mTextViewDescendants.setText(currentStory.getDescendants().toString());
         holder.mTextViewUrl.setText(currentStory.getUrl());
+        holder.mTextViewUser.setText(currentStory.getBy());
         holder.mTextViewUrl.setOnClickListener(new View.OnClickListener() {
 
             @Override

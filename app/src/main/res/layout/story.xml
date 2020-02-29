@@ -59,12 +59,22 @@
                 android:layout_toRightOf="@+id/textViewScore"
                 android:textSize="20sp"
                 android:textStyle="bold"></TextView>
+            <TextView
+                android:id="@+id/userTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toRightOf="@+id/textViewScore"></TextView>
 
             <TextView
                 android:id="@+id/urlTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
+                android:layout_below="@+id/userTxtView"
                 android:layout_marginStart="3dp"
                 android:layout_toRightOf="@+id/textViewScore"></TextView>
 
