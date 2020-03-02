@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     HackerNewsApi hackerNewsApi;
     Call<DataResponse> story;
     ProgressBar progressBar;
+    Toolbar toolbar;
     private SwipeRefreshLayout swipeContainer;
 
     @SuppressLint("CheckResult")
@@ -49,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         progressBar = findViewById(R.id.progress);
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
