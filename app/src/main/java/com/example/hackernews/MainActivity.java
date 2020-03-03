@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
@@ -45,6 +46,13 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     ProgressBar progressBar;
     Toolbar toolbar;
     private SwipeRefreshLayout swipeContainer;
+
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0,0,0,"title");
+        return true;
+    }
 
     @SuppressLint("CheckResult")
     @Override
