@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
@@ -54,6 +55,23 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.login:
+                Intent loginIntent = new Intent(this,LoginActivity.class);
+                startActivity(loginIntent);
+                return true;
+            case R.id.profile:
+                Intent profileIntent = new Intent(this,ProfileActivity.class);
+                startActivity(profileIntent);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("CheckResult")
