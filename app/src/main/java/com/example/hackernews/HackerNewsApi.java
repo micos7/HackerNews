@@ -23,7 +23,7 @@ public interface HackerNewsApi {
 
     @FormUrlEncoded
     @Headers({"Content-Type: application/x-www-form-urlencoded", "Access-Control-Allow-Origin: *"})
-    @POST("login?goto=news")
+    @POST("login?goto=news?p=building_android_client_dont_ban_me")
     Call<DefaultHandler> login(@Field("acct") String user, @Field("pw") String password);
 
 }
