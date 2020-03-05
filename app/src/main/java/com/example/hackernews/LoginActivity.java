@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -17,7 +19,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 import java.net.CookieHandler;
-import java.net.CookieManager;
+
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.JavaNetCookieJar;
@@ -31,26 +36,45 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "LoginActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent intent = new Intent(this,MainActivity.class);
+
+        Intent intent = new Intent(this, MainActivity.class);
         WebView myWebView = findViewById(R.id.webview);
+        myWebView.loadUrl("https://news.ycombinator.com/login");
+
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
 
-                if (url.equals("https://news.ycombinator.com/news")){
-                    startActivity(intent);
-                }
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                CookieManager.getInstance().acceptThirdPartyCookies(myWebView);
+
+                CookieManager cookieManager = CookieManager.getInstance();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    cookieManager.setAcceptThirdPartyCookies(myWebView, true);
+                } else {
+                    cookieManager.setAcceptCookie(true);
+                }
+
+                String cookieStr = CookieManager.getInstance().getCookie(url);
+
+                if (cookieStr != null) {
+                    startActivity(intent);
+                }
+
+
+                Log.d(TAG, "onPageStarted: " + cookieStr);
             }
 
             @Override
@@ -58,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                 super.onPageCommitVisible(view, url);
             }
         });
-        myWebView.loadUrl("https://news.ycombinator.com/login?goto=news");
 
 
 //        EditText username = findViewById(R.id.editTextUsername);
