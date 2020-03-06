@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         if(cookieStr != null){
             menu.removeItem(R.id.login);
         }
+        if(cookieStr == null){
+            menu.removeItem(R.id.logout);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -86,6 +89,10 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
             case R.id.profile:
                 Intent profileIntent = new Intent(this, ProfileActivity.class);
                 startActivity(profileIntent);
+                return true;
+            case R.id.logout:
+                cookieStr = null;
+                invalidateOptionsMenu();
                 return true;
 
             default:
