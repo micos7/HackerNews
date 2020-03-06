@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 
@@ -19,6 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+
+import java.net.CookieHandler;
+import java.net.CookiePolicy;
+import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +35,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity implements StoryAdapter.OnStoryListener {
+
+    private static final String TAG = "MainActivity";
 
     private RecyclerView mRecyclerView;
     private StoryAdapter mAdapter;
@@ -41,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     int currentItems, totalItems, scrollOutItems;
     int totalList;
     int noComments;
+    String cookieStr;
     Integer j;
     Call<List<Integer>> idlist;
     HackerNewsApi hackerNewsApi;
@@ -58,20 +68,30 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(cookieStr != null){
+            menu.removeItem(R.id.login);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.login:
-                Intent loginIntent = new Intent(this,LoginActivity.class);
+                Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
                 return true;
             case R.id.profile:
-                Intent profileIntent = new Intent(this,ProfileActivity.class);
+                Intent profileIntent = new Intent(this, ProfileActivity.class);
                 startActivity(profileIntent);
                 return true;
 
+            default:
+                throw new IllegalStateException("Unexpected value: " + item.getItemId());
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     @SuppressLint("CheckResult")
@@ -87,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         swipeContainer = findViewById(R.id.swipeRefresh);
+
+        CookieManager mCookieManager = CookieManager.getInstance();
+        if (mCookieManager.hasCookies()) {
+            cookieStr = CookieManager.getInstance().getCookie("https://news.ycombinator.com/login");
+            Log.d(TAG, "cookies: " + cookieStr);
+        }
 
 
         getFirstStories();
@@ -207,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                                 if (st.isSuccessful()) {
                                     dataResponses.add(st.body());
                                     mAdapter.notifyDataSetChanged();
-                                    progressBar.setVisibility(View.GONE);
+                                    progressBar.setVisibility(GONE);
                                 }
 
                             }
