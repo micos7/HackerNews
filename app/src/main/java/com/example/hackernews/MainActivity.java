@@ -1,7 +1,9 @@
 package com.example.hackernews;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 
@@ -67,6 +70,25 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         return true;
     }
 
+    @SuppressWarnings("deprecation")
+    public static void clearCookies(Context context)
+    {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else
+        {
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if(cookieStr != null){
@@ -92,8 +114,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 return true;
             case R.id.logout:
                 cookieStr = null;
-                CookieManager.getInstance().removeAllCookies(null);
-                CookieManager.getInstance().flush();
+                clearCookies(this);
                 invalidateOptionsMenu();
                 return true;
 
