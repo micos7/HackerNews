@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 return true;
             case R.id.logout:
                 cookieStr = null;
+                CookieManager.getInstance().removeAllCookies(null);
+                CookieManager.getInstance().flush();
                 invalidateOptionsMenu();
                 return true;
 

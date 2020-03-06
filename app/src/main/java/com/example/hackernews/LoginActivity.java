@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 super.onPageStarted(view, url, favicon);
 
 
+
                 String cookieStr = CookieManager.getInstance().getCookie(url);
 
                 if (cookieStr != null) {
