@@ -26,4 +26,7 @@ public interface HackerNewsApi {
     @POST("login?goto=news?p=building_android_client_dont_ban_me")
     Call<DefaultHandler> login(@Field("acct") String user, @Field("pw") String password);
 
+    @GET("user/{id}.json?print=pretty")
+    Call<ProfileResponse> getProfile(@Path("id") String id);
+
 }

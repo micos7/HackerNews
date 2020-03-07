@@ -70,18 +70,15 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         return true;
     }
 
-    @SuppressWarnings("deprecation")
-    public static void clearCookies(Context context)
-    {
+    public static void clearCookies(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             CookieManager.getInstance().removeAllCookies(null);
             CookieManager.getInstance().flush();
-        } else
-        {
-            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+        } else {
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
             cookieSyncMngr.startSync();
-            CookieManager cookieManager=CookieManager.getInstance();
+            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
             cookieManager.removeSessionCookie();
             cookieSyncMngr.stopSync();
@@ -91,11 +88,12 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(cookieStr != null){
+        if (cookieStr != null) {
             menu.removeItem(R.id.login);
         }
-        if(cookieStr == null){
+        if (cookieStr == null) {
             menu.removeItem(R.id.logout);
+            menu.removeItem(R.id.profile);
         }
         return super.onPrepareOptionsMenu(menu);
     }
