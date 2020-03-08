@@ -15,6 +15,7 @@
     </TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profileRecyclerView"
+        android:layout_below="@+id/profileTextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
