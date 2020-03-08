@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import retrofit2.Call;
+
 public class ProfileResponse {
 
     @SerializedName("created")
@@ -48,9 +50,6 @@ public class ProfileResponse {
         return submitted;
     }
 
-    public void setSubmitted(List<Integer> submitted) {
-        this.submitted = submitted;
-    }
 
 
 }

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressBar = findViewById(R.id.progress);
         mRecyclerView = findViewById(R.id.recyclerView);
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                     }
                 }
             }
-            Log.d(TAG, "cookies: " + user);
+            //Log.d(TAG, "cookies: " + user);
         }
 
 
@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 super.onScrolled(recyclerView, dx, dy);
                 currentItems = mLayoutManager.getChildCount();
                 totalItems = mLayoutManager.getItemCount();
-                Log.e("onSubscribe", "VERTICAL " + dy);
                 scrollOutItems = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
 
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {

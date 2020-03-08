@@ -1,11 +1,17 @@
 package com.example.hackernews;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,6 +26,12 @@ public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "ProfileActivity";
 
     TextView pTextView;
+    List<Integer> submissionsId;
+    Call<DataResponse> story;
+    List<DataResponse> stories = new ArrayList<>();
+    RecyclerView mRecyclerView;
+    SubmissionsAdapter mAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,16 @@ public class ProfileActivity extends AppCompatActivity {
         String userName = intent.getExtras().getString("username");
 
         pTextView = findViewById(R.id.profileTextView);
+
+        pTextView.setText(userName);
+
+        mRecyclerView = findViewById(R.id.profileRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new SubmissionsAdapter(stories);
+        mRecyclerView.setAdapter(mAdapter);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -50,8 +72,25 @@ public class ProfileActivity extends AppCompatActivity {
         profileData.enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
-                Log.d(TAG, "profile: "+response);
-                pTextView.setText(response.body().getKarma().toString());
+
+                submissionsId = response.body().getSubmitted();
+
+                for (int i =0;i<submissionsId.size();i++){
+                    story = hackerNewsApi.getStory(submissionsId.get(i));
+                    story.enqueue(new Callback<DataResponse>() {
+                        @Override
+                        public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                            Log.d(TAG, "abc"+response.body().getText());
+                            stories.add(response.body());
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(Call<DataResponse> call, Throwable t) {
+
+                        }
+                    });
+                }
             }
 
             @Override
@@ -59,5 +98,6 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
