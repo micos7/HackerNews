@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
     boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
     int totalList;
+    String user = null;
     int noComments;
     String cookieStr;
     Integer j;
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
                 return true;
             case R.id.profile:
                 Intent profileIntent = new Intent(this, ProfileActivity.class);
+                profileIntent.putExtra("username",user);
                 startActivity(profileIntent);
                 return true;
             case R.id.logout:
@@ -139,7 +141,17 @@ public class MainActivity extends AppCompatActivity implements StoryAdapter.OnSt
         CookieManager mCookieManager = CookieManager.getInstance();
         if (mCookieManager.hasCookies()) {
             cookieStr = CookieManager.getInstance().getCookie("https://news.ycombinator.com/login");
-            Log.d(TAG, "cookies: " + cookieStr);
+            if(cookieStr != null){
+                String[] temp=cookieStr.split(";");
+                for (String ar1 : temp ){
+                    if(ar1.contains("user")){
+                        String[] temp1=ar1.split("&");
+                        user = temp1[0];
+                        user = user.replace("user=","");
+                    }
+                }
+            }
+            Log.d(TAG, "cookies: " + user);
         }
 
 

@@ -2,6 +2,7 @@ package com.example.hackernews;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,6 +26,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        Intent intent = getIntent();
+        String userName = intent.getExtras().getString("username");
+
         pTextView = findViewById(R.id.profileTextView);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -41,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         HackerNewsApi hackerNewsApi = retrofit.create(HackerNewsApi.class);
 
-        Call<ProfileResponse> profileData = hackerNewsApi.getProfile("misotaur");
+        Call<ProfileResponse> profileData = hackerNewsApi.getProfile(userName);
 
         profileData.enqueue(new Callback<ProfileResponse>() {
             @Override
