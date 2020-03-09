@@ -1,5 +1,6 @@
 package com.example.hackernews;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,14 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
     public void onBindViewHolder(@NonNull SubmissionsAdapter.ExampleViewHolder holder, int position) {
         DataResponse currentStory = sStories.get(position);
 
-        holder.mTextView.setText(currentStory.getTitle());
+        if (currentStory.getTitle() != null){
+            holder.mTextView.setText(currentStory.getTitle());
+        }else {
+            if(currentStory.getText() != null){
+                holder.mTextView.setText(Html.fromHtml(currentStory.getText()));
+            }
+        }
+
 
     }
 
