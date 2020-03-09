@@ -21,7 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements SubmissionsAdapter.OnStoryListener {
 
     private static final String TAG = "ProfileActivity";
 
@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SubmissionsAdapter(stories);
+        mAdapter = new SubmissionsAdapter(stories,this);
         mRecyclerView.setAdapter(mAdapter);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -99,5 +99,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStoryClick(int position) {
+        Log.d(TAG, "TEST ");
+        Intent intent = new Intent(this, StoryActivity.class);
+        intent.putExtra("STORY", stories.get(position));
+        startActivity(intent);
     }
 }

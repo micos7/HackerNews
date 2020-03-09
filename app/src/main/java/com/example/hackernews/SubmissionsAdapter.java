@@ -14,26 +14,34 @@ import java.util.List;
 public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.ExampleViewHolder> {
 
     private List<DataResponse> sStories;
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder {
+    private OnStoryListener mOnStoryListener;
+    public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
+        OnStoryListener onStoryListener;
 
-        public ExampleViewHolder(@NonNull View itemView) {
+        public ExampleViewHolder(@NonNull View itemView,OnStoryListener onStoryListener) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.submission_comment);
-
+            this.onStoryListener = onStoryListener;
+            mTextView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            onStoryListener.onStoryClick(getAdapterPosition());
+        }
     }
 
-    public SubmissionsAdapter(List<DataResponse> stories) {
+    public SubmissionsAdapter(List<DataResponse> stories,OnStoryListener onStoryListener) {
         sStories = stories;
+        mOnStoryListener = onStoryListener;
     }
 
     @NonNull
     @Override
     public SubmissionsAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.submissions, parent, false);
-        SubmissionsAdapter.ExampleViewHolder evh = new SubmissionsAdapter.ExampleViewHolder(v);
+        SubmissionsAdapter.ExampleViewHolder evh = new SubmissionsAdapter.ExampleViewHolder(v,mOnStoryListener);
         return evh;
     }
 
@@ -72,6 +80,10 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
     @Override
     public int getItemCount() {
         return sStories.size();
+    }
+
+    public interface OnStoryListener {
+        void onStoryClick(int position);
     }
 
 
