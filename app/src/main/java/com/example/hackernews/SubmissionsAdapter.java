@@ -17,11 +17,13 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
     private OnStoryListener mOnStoryListener;
     public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
+        public TextView lTextView;
         OnStoryListener onStoryListener;
 
         public ExampleViewHolder(@NonNull View itemView,OnStoryListener onStoryListener) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.submission_comment);
+            lTextView = itemView.findViewById(R.id.subLinkTextView);
             this.onStoryListener = onStoryListener;
             mTextView.setOnClickListener(this);
         }
@@ -68,9 +70,11 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
 
         if (currentStory.getTitle() != null){
             holder.mTextView.setText(currentStory.getTitle());
+            holder.lTextView.setText("View story");
         }else {
             if(currentStory.getText() != null){
                 holder.mTextView.setText(Html.fromHtml(currentStory.getText()));
+                holder.lTextView.setText("View thread");
             }
         }
 

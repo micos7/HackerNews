@@ -11,17 +11,28 @@
         android:id="@+id/submissions_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/textview_background"
+        android:layout_margin="4dp"
         android:layout_marginLeft="8dp">
 
 
         <TextView
-            android:background="@android:drawable/editbox_background"
             android:id="@+id/submission_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold" />
+            android:textStyle="bold"></TextView>
 
+        <TextView
+            android:id="@+id/subLinkTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/colorAccent"
+            android:layout_below="@+id/submission_comment"
+            android:textAlignment="viewEnd">
 
+        </TextView>
 
     </RelativeLayout>
 

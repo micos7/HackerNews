@@ -108,4 +108,9 @@ public class ProfileActivity extends AppCompatActivity implements SubmissionsAda
         intent.putExtra("STORY", stories.get(position));
         startActivity(intent);
     }
+
+
+    public void getAllSubmissions(List<DataResponse> stories){
+
+    }
 }
