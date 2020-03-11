@@ -12,6 +12,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> commentsLvl5 = new ArrayList<>();
     private List<DataResponse> commentsLvl6 = new ArrayList<>();
     private List<DataResponse> commentsLvl7 = new ArrayList<>();
+    private List<DataResponse> upperStory = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
     Call<DataResponse> commentLvl3;
@@ -60,8 +62,18 @@ public class StoryActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null) {
             Intent intent = getIntent();
-            final DataResponse myStory = (DataResponse) intent.
+            DataResponse myStory = (DataResponse) intent.
                     getSerializableExtra("STORY");
+
+            Log.d(TAG, "plm "+myStory.getParent());
+            if (myStory.getParent() != null) {
+
+                getStoryParent(myStory.getParent(),upperStory);
+                Log.d(TAG, "UPPER "+upperStory);
+                myStory = upperStory.get(0);
+            }
+
+            Log.d(TAG, "UPPE "+upperStory);
 
             List<Integer> commentsIds = myStory.getKids();
 
@@ -272,5 +284,69 @@ public class StoryActivity extends AppCompatActivity {
             //Log.d(TAG, "onCreate: " + myStory.getTitle());
             //storyTextView.setText(myStory.getTitle());
         }
+    }
+
+    public void getStoryParent(int storyid, List<DataResponse> upper) {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://hacker-news.firebaseio.com/v0/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        HackerNewsApi hackerNewsApi = retrofit.create(HackerNewsApi.class);
+        Call<DataResponse> parent = hackerNewsApi.getStory(storyid);
+
+
+//            Thread thread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Response<DataResponse> story = null;
+//                    try {
+//                        story = parent.execute();
+//                        Log.d(TAG, "whoa "+story.body().getTitle());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (story.body().getType() != "story") {
+//                        Log.d(TAG, "conditie");
+//                        getStoryParent(story.body().getParent(), upper);
+//                    }else {
+//                        Log.d(TAG, "adauga "+story.body());
+//                        upper.add(story.body());
+//
+//                    }
+//                }
+//            });
+//            thread.start();
+
+
+        parent.enqueue(new Callback<DataResponse>() {
+            @Override
+            public void onResponse(Call<DataResponse> call, Response<DataResponse> response) {
+                Log.d(TAG, "yomama ");
+                if (response.body().getParent() != null) {
+                    getStoryParent(response.body().getParent(), upper);
+                    Log.d(TAG, "recurs ");
+                }else {
+                    upper.add(response.body());
+                    Log.d(TAG, "adauga "+response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<DataResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 }
