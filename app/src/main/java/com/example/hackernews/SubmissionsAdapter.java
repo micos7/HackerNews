@@ -15,12 +15,13 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
 
     private List<DataResponse> sStories;
     private OnStoryListener mOnStoryListener;
+
     public static class ExampleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView mTextView;
         public TextView lTextView;
         OnStoryListener onStoryListener;
 
-        public ExampleViewHolder(@NonNull View itemView,OnStoryListener onStoryListener) {
+        public ExampleViewHolder(@NonNull View itemView, OnStoryListener onStoryListener) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.submission_comment);
             lTextView = itemView.findViewById(R.id.subLinkTextView);
@@ -34,7 +35,7 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
         }
     }
 
-    public SubmissionsAdapter(List<DataResponse> stories,OnStoryListener onStoryListener) {
+    public SubmissionsAdapter(List<DataResponse> stories, OnStoryListener onStoryListener) {
         sStories = stories;
         mOnStoryListener = onStoryListener;
     }
@@ -43,7 +44,7 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
     @Override
     public SubmissionsAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.submissions, parent, false);
-        SubmissionsAdapter.ExampleViewHolder evh = new SubmissionsAdapter.ExampleViewHolder(v,mOnStoryListener);
+        SubmissionsAdapter.ExampleViewHolder evh = new SubmissionsAdapter.ExampleViewHolder(v, mOnStoryListener);
         return evh;
     }
 
@@ -68,11 +69,11 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
     public void onBindViewHolder(@NonNull SubmissionsAdapter.ExampleViewHolder holder, int position) {
         DataResponse currentStory = sStories.get(position);
 
-        if (currentStory.getTitle() != null){
+        if (currentStory.getTitle() != null) {
             holder.mTextView.setText(currentStory.getTitle());
             holder.lTextView.setText("View story");
-        }else {
-            if(currentStory.getText() != null){
+        } else {
+            if (currentStory.getText() != null) {
                 holder.mTextView.setText(Html.fromHtml(currentStory.getText()));
                 holder.lTextView.setText("View thread");
             }

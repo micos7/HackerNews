@@ -32,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity implements SubmissionsAda
     RecyclerView mRecyclerView;
     SubmissionsAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +105,18 @@ public class ProfileActivity extends AppCompatActivity implements SubmissionsAda
     @Override
     public void onStoryClick(int position) {
         Log.d(TAG, "TEST ");
-        Intent intent = new Intent(this, StoryActivity.class);
-        intent.putExtra("STORY", stories.get(position));
-        startActivity(intent);
+        if(stories.get(position).getTitle() != null){
+            Intent intent = new Intent(this, StoryActivity.class);
+            intent.putExtra("STORY", stories.get(position));
+            startActivity(intent);
+        }else{
+            if(stories.get(position).getText() != null){
+                Intent intent = new Intent(this, ThreadActivity.class);
+                intent.putExtra("THREAD", stories.get(position));
+                startActivity(intent);
+            }
+        }
+
     }
 
 
