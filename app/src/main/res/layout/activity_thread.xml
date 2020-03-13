@@ -9,14 +9,15 @@
     <TextView
         android:id="@+id/threadTextView"
         android:gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     </TextView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/threadRecyclerView"
-        android:layout_below="@+id/profileTextView"
-        android:layout_width="wrap_content"
+        android:layout_below="@+id/threadTextView"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>

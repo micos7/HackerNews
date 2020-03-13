@@ -2,7 +2,6 @@ package com.example.hackernews;
 
 import android.content.Context;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,32 +9,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
 public class ThreadAdapter extends  RecyclerView.Adapter<ThreadAdapter.ThreadViewHolder> {
-    private List<DataResponse> mComments;
+    private List<DataResponse> mComments = new ArrayList<>();
 
     Context context;
 
 
     public ThreadAdapter(List<DataResponse> comments) {
         mComments = comments;
+        Log.d(TAG, "ThreadAdapter: "+mComments.size());
 
     }
 
     public static class ThreadViewHolder extends RecyclerView.ViewHolder {
         public TextView cTextView;
+        public TextView pTextView;
         public RecyclerView cRecyclerView;
 
 
         public ThreadViewHolder(@NonNull View itemView) {
             super(itemView);
-            cTextView = itemView.findViewById(R.id.threadTextView);
+            cTextView = itemView.findViewById(R.id.threadoriginal);
+            pTextView = itemView.findViewById(R.id.threadParent);
             cRecyclerView = itemView.findViewById(R.id.threadRecyclerView);
         }
     }
@@ -43,7 +45,7 @@ public class ThreadAdapter extends  RecyclerView.Adapter<ThreadAdapter.ThreadVie
     @NonNull
     @Override
     public ThreadAdapter.ThreadViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.thread, parent, false);
         ThreadAdapter.ThreadViewHolder cvh = new ThreadAdapter.ThreadViewHolder(v);
         return cvh;
 
@@ -54,24 +56,12 @@ public class ThreadAdapter extends  RecyclerView.Adapter<ThreadAdapter.ThreadVie
     public void onBindViewHolder(@NonNull ThreadAdapter.ThreadViewHolder holder, int position) {
 
 
+        Log.d(TAG, "plmmmm "+mComments.get(position).getTitle());
         if (mComments.get(position) != null) {
             DataResponse currentComment = mComments.get(position);
+            holder.cTextView.setText(Html.fromHtml(currentComment.getTitle()));
 
-
-
-            holder.cRecyclerView.setHasFixedSize(false);
-            holder.cRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-
-
-            if (currentComment.getText() != null) {
-
-                Log.d(TAG, "COMENTU " + currentComment.getId());
-                holder.cTextView.setTag(currentComment.getId());
-                holder.cTextView.setText(Html.fromHtml(currentComment.getText()));
-                holder.cTextView.setMovementMethod(LinkMovementMethod.getInstance());
-            } else {
-                holder.cRecyclerView.setVisibility(View.GONE);
-            }
+            Log.d(TAG, "plm1 "+ holder.cTextView.getText());
 
         }
 
