@@ -1,6 +1,7 @@
 package com.example.hackernews;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import static android.content.ContentValues.TAG;
 
 public class ThreadAdapter extends  RecyclerView.Adapter<ThreadAdapter.ThreadViewHolder> {
     private List<DataResponse> mComments = new ArrayList<>();
-
     Context context;
 
 
@@ -60,6 +60,14 @@ public class ThreadAdapter extends  RecyclerView.Adapter<ThreadAdapter.ThreadVie
         if (mComments.get(position) != null) {
             DataResponse currentComment = mComments.get(position);
             holder.cTextView.setText(Html.fromHtml(currentComment.getTitle()));
+            holder.cTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), StoryActivity.class);
+                    intent.putExtra("STORY", mComments.get(position));
+                    v.getContext().startActivity(intent);
+                }
+            });
 
             Log.d(TAG, "plm1 "+ holder.cTextView.getText());
 
