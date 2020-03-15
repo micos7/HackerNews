@@ -38,7 +38,6 @@ public class StoryActivity extends AppCompatActivity {
     private List<DataResponse> commentsLvl5 = new ArrayList<>();
     private List<DataResponse> commentsLvl6 = new ArrayList<>();
     private List<DataResponse> commentsLvl7 = new ArrayList<>();
-    private List<DataResponse> upperStory = new ArrayList<>();
     Call<DataResponse> commentLvl1;
     Call<DataResponse> commentLvl2;
     Call<DataResponse> commentLvl3;
@@ -47,6 +46,7 @@ public class StoryActivity extends AppCompatActivity {
     Call<DataResponse> commentLvl6;
     Call<DataResponse> commentLvl7;
     public Context context;
+    private TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class StoryActivity extends AppCompatActivity {
         cRecyclerView.setHasFixedSize(true);
         cLayoutManager = new LinearLayoutManager(getApplicationContext());
         cRecyclerView.setLayoutManager(cLayoutManager);
+        titleTextView = findViewById(R.id.story_title);
         cAdapter = new CommentsAdapter(comments, commentsLvl1, commentsLvl2, commentsLvl3, commentsLvl4, commentsLvl5, commentsLvl6, commentsLvl7);
 
 
@@ -65,15 +66,18 @@ public class StoryActivity extends AppCompatActivity {
             DataResponse myStory = (DataResponse) intent.
                     getSerializableExtra("STORY");
 
-            Log.d(TAG, "plm "+myStory.getParent());
-            if (myStory.getParent() != null) {
 
-                getStoryParent(myStory.getParent(),upperStory);
-                Log.d(TAG, "UPPER "+upperStory);
-                myStory = upperStory.get(0);
-            }
+//            if (myStory.getParent() != null) {
+//
+//                getStoryParent(myStory.getParent(),upperStory);
+//                Log.d(TAG, "UPPER "+upperStory);
+//                myStory = upperStory.get(0);
+//            }
 
-            Log.d(TAG, "UPPE "+upperStory);
+            titleTextView.setText(myStory.getTitle());
+
+
+
 
             List<Integer> commentsIds = myStory.getKids();
 

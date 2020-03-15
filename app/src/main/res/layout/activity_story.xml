@@ -12,7 +12,6 @@
         android:textColor="@color/colorAccent"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:text="asdlkasdnkasndknsad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </TextView>

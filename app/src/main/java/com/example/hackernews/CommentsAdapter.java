@@ -71,9 +71,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         if (mComments.get(position) != null) {
             DataResponse currentComment = mComments.get(position);
 
-            if(currentComment.getTitle() != null){
-                holder.tTextView.setText(currentComment.getTitle());
-            }
+
 
 
             SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subCommentsLvl1,subCommentsLvl2,subCommentsLvl3,subCommentsLvl4,subCommentsLvl5,subCommentsLvl6,subCommentsLvl7, holder.cTextView);
