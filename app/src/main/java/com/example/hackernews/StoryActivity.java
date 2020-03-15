@@ -28,7 +28,7 @@ public class StoryActivity extends AppCompatActivity {
     private static final String TAG = "StoryActivity";
 
     private RecyclerView cRecyclerView;
-    private RecyclerView.Adapter cAdapter;
+    private CommentsAdapter cAdapter;
     private RecyclerView.LayoutManager cLayoutManager;
     private List<DataResponse> comments = new ArrayList<>();
     private List<DataResponse> commentsLvl1 = new ArrayList<>();

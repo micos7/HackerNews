@@ -5,10 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".StoryActivity">
+
+    <TextView
+        android:id="@+id/story_title"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:text="asdlkasdnkasndknsad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/story_title"
         android:padding="2dp"
         android:scrollbars="vertical">
 

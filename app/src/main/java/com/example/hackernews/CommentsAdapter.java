@@ -42,12 +42,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
         public TextView cTextView;
+        public TextView tTextView;
         public RecyclerView cRecyclerView;
 
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             cTextView = itemView.findViewById(R.id.commentTextView);
+            tTextView = itemView.findViewById(R.id.story_title);
             cRecyclerView = itemView.findViewById(R.id.comRecyclerView);
         }
     }
@@ -69,6 +71,10 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         if (mComments.get(position) != null) {
             DataResponse currentComment = mComments.get(position);
 
+            if(currentComment.getTitle() != null){
+                holder.tTextView.setText(currentComment.getTitle());
+            }
+
 
             SubCommentsAdapter subCommentsAdapter = new SubCommentsAdapter(subCommentsLvl1,subCommentsLvl2,subCommentsLvl3,subCommentsLvl4,subCommentsLvl5,subCommentsLvl6,subCommentsLvl7, holder.cTextView);
 
@@ -82,6 +88,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
                 Log.d(TAG, "COMENTU " + currentComment.getId());
                 holder.cTextView.setTag(currentComment.getId());
+
                 holder.cTextView.setText(Html.fromHtml(currentComment.getText()));
                 holder.cTextView.setMovementMethod(LinkMovementMethod.getInstance());
             } else {

@@ -28,6 +28,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
         public TextView mTextViewDescendants;
         public TextView mTextViewUrl;
         public TextView mTextViewUser;
+        public TextView sTextViewTitle;
         OnStoryListener onStoryListener;
 
         public ExampleViewHolder(@NonNull View itemView, OnStoryListener onStoryListener) {
@@ -84,6 +85,8 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ExampleViewH
 
         holder.mTextView.setText(currentStory.getTitle());
         holder.mTextViewScore.setText(currentStory.getScore().toString());
+
+
         if (currentStory.getDescendants() != null) {
             holder.mTextViewDescendants.setText(currentStory.getDescendants().toString());
         }
