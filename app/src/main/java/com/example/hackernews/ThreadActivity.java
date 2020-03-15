@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -59,7 +60,7 @@ public class ThreadActivity extends AppCompatActivity {
             Integer commentId = myThread.getParent();
 
 
-            tTextView.setText(myThread.getText());
+            tTextView.setText(Html.fromHtml(myThread.getText()));
 
 
 
