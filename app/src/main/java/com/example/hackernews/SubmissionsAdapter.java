@@ -26,7 +26,7 @@ public class SubmissionsAdapter extends RecyclerView.Adapter<SubmissionsAdapter.
             mTextView = itemView.findViewById(R.id.submission_comment);
             lTextView = itemView.findViewById(R.id.subLinkTextView);
             this.onStoryListener = onStoryListener;
-            mTextView.setOnClickListener(this);
+            lTextView.setOnClickListener(this);
         }
 
         @Override
